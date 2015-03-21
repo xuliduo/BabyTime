@@ -1,0 +1,169 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="opt.power.com.babytime.DetailsActivity">
+
+    <TextView
+        android:text="开始时间："
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:id="@+id/dd_text_st" />
+
+    <EditText
+        android:hint="yyyy-MM-dd HH:mm:ss"
+        android:inputType="datetime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/d_start_time"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/dd_text_st"
+        android:layout_toEndOf="@+id/dd_text_st" />
+
+    <TextView
+        android:text="结束时间："
+        android:textSize="24sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dd_text_et"
+        android:layout_below="@+id/dd_text_st"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:hint="yyyy-MM-dd HH:mm:ss"
+        android:inputType="datetime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/d_end_time"
+        android:layout_below="@+id/dd_text_st"
+        android:layout_toRightOf="@+id/dd_text_st"
+        android:layout_toEndOf="@+id/dd_text_st" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="设置开始时间"
+        android:id="@+id/d_bt_start"
+        android:layout_alignTop="@+id/d_bt_end_time"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="设置结束时间"
+        android:id="@+id/d_bt_end_time"
+        android:layout_below="@+id/d_end_time"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <RadioGroup
+        android:id="@+id/d_rg"
+        android:layout_width="fill_parent"
+        android:layout_height="120dp"
+        android:layout_below="@+id/d_bt_start"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="喂奶"
+            android:checked="true"
+            android:id="@+id/d_rb_bfeeding" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="睡觉"
+            android:id="@+id/d_rb_sleep" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="洗澡"
+            android:id="@+id/d_rb_bathe" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="WC"
+            android:id="@+id/d_rb_wc" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="玩"
+            android:id="@+id/d_rb_play" />
+    </RadioGroup>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@+id/d_rg"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/d_bt_commit"
+        android:layout_alignRight="@+id/d_bt_end_time"
+        android:layout_alignEnd="@+id/d_bt_end_time">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:text="人奶(ml):"
+                android:layout_weight="1" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="数字..."
+                android:inputType="number"
+                android:id="@+id/d_human"
+                android:layout_weight="3" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:layout_weight="1"
+                android:text="牛奶(ml):" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:layout_weight="3"
+                android:hint="数字..."
+                android:id="@+id/d_milk" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="确定"
+        android:id="@+id/d_bt_commit"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/d_bt_end_time"
+        android:layout_alignEnd="@+id/d_bt_end_time" />
+</RelativeLayout>
