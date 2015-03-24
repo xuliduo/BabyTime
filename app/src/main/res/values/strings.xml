@@ -5,4 +5,5 @@
     <string name="action_settings">设置</string>
     <string name="title_activity_details">内容</string>
     <string name="title_activity_history">历史记录</string>
+    <string name="title_activity_chart">报表</string>
 </resources>

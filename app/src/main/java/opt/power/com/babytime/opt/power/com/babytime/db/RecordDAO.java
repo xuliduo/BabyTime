@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class RecordDAO {
 
-    public static enum BabyType {喂奶, 睡觉, 洗澡, WC, 玩}
+    //public static enum BabyType {喂奶, 睡觉, 洗澡, WC, 玩}
 
     private static final String TABLE_NAME = "record";
 
@@ -179,10 +179,24 @@ public class RecordDAO {
      * @return
      */
     public List<Record> getListView(int limit) {
+        return getListGroupByDay("1=1", limit, "DESC");
+    }
+
+    /**
+     * 通过day进行汇总
+     *
+     * @param where
+     * @param limit
+     * @param desc
+     * @return
+     */
+    private List<Record> getListGroupByDay(String where, int limit, String desc) {
         List<Record> list = new ArrayList<>();
         String sql = "SELECT SUM(hu_milk),SUM(milk),SUM(hu_milk+milk),SUM(milk_time)," +
                 "SUM(sleep_time),SUM(is_wc),SUM(play_time),day FROM " +
-                TABLE_NAME + " GROUP BY day ORDER BY day DESC LIMIT " + limit;
+                TABLE_NAME + " WHERE " +
+                where + " GROUP BY day ORDER BY day "
+                + desc + " LIMIT " + limit;
         Cursor result = db.rawQuery(sql, null);
         while (result.moveToNext()) {
             Record record = new Record();
@@ -201,6 +215,13 @@ public class RecordDAO {
         return list;
     }
 
+    /**
+     * 获得最近几天的数据
+     *
+     * @param limit
+     * @param page
+     * @return
+     */
     public List<Record> getRecords(int limit, int page) {
         List<Record> list = new ArrayList<>();
         Cursor result = db.query(TABLE_NAME, null, null, null, null, null, "start_time desc", String.valueOf(limit));
@@ -209,5 +230,35 @@ public class RecordDAO {
             list.add(record);
         }
         return list;
+    }
+
+    /**
+     * 通过日期，获得汇总数据
+     *
+     * @param month
+     * @return
+     */
+    public List<Record> getRecordsByMonth(String month) {
+        return this.getListGroupByDay("day LIKE '" + month + "%'", 60, "");
+    }
+
+    /**
+     * 通过日期，获得当月牛奶占比
+     *
+     * @param month
+     * @return
+     */
+    public int[] getBfeedingByMonth(String month) {
+        int[] re = new int[2];
+        String sql = "SELECT SUM(hu_milk),SUM(milk),substr(day,1,4)||'-'||substr(day,6,2) as month FROM " +
+                TABLE_NAME + " WHERE day LIKE '"
+                + month + "%' GROUP BY month";
+        Cursor result = db.rawQuery(sql, null);
+        while (result.moveToNext()) {
+            re[0] = (int) result.getLong(0);
+            re[1] = (int) result.getLong(1);
+        }
+        result.close();
+        return re;
     }
 }

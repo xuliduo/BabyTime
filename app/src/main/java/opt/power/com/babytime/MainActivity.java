@@ -33,6 +33,7 @@ public class MainActivity extends ActionBarActivity {
     private Button btUpdate = null;//更新
     private Button btNew = null;//新增
     private Button btHis = null;//查看历史
+    private Button btChart = null;//chart
 
     private TextView startTimeText = null;//开始时间的文本
     private TextView endTimeText = null;//结束时间的文本
@@ -54,6 +55,7 @@ public class MainActivity extends ActionBarActivity {
         this.btUpdate = (Button) this.findViewById(R.id.bt_update);
         this.btNew = (Button) this.findViewById(R.id.button3);
         this.btHis = (Button) this.findViewById(R.id.button2);
+        this.btChart = (Button) this.findViewById(R.id.m_bt_update);
 
         this.startTimeText = (TextView) this.findViewById(R.id.last_start_time);
         this.endTimeText = (TextView) this.findViewById(R.id.last_end_time);
@@ -68,6 +70,7 @@ public class MainActivity extends ActionBarActivity {
         this.btUpdate.setOnClickListener(goClick);
         this.btNew.setOnClickListener(goClick);
         this.btHis.setOnClickListener(goClick);
+        this.btChart.setOnClickListener(goClick);
 
         //加载最后一条记录
         runOnUiThread(new Runnable() {
@@ -253,6 +256,11 @@ public class MainActivity extends ActionBarActivity {
                 case R.id.button2:
                     intent = new Intent(MainActivity.this, HistoryActivity.class);
                     startActivityForResult(intent, 1);
+                    break;
+                //报表
+                case R.id.m_bt_update:
+                    intent = new Intent(MainActivity.this, ChartActivity.class);
+                    startActivity(intent);
                     break;
             }
         }

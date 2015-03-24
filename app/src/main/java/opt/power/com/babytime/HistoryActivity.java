@@ -126,7 +126,7 @@ public class HistoryActivity extends ActionBarActivity {
         @Override
         protected Boolean doInBackground(String... params) {
             //读取数据库数据（List）
-            List<Record> list = dao.getRecords(30, 1);
+            List<Record> list = dao.getRecords(50, 1);
             for (Record record : list) {
                 HashMap<String, String> map = new HashMap<>();
                 map.put(m[0], record.getId() + "");

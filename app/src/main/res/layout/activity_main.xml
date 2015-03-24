@@ -11,7 +11,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="补充数据"
+        android:text="看图说话"
         android:id="@+id/m_bt_update"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"

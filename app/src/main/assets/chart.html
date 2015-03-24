@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html>
+
+<head>
+
+    <style type="text/css">
+        body {
+        margin: 0px;
+        padding: 0px;
+        }
+        #milk,
+        #milk_time,
+        #milk_pie,
+        #sleep_time,
+        #wc {
+        width: 85%;
+        height: 300px;
+        margin: 0px auto;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<h2>奶量：</h2>
+
+<div id="milk"></div>
+
+<h2>喝奶时间：</h2>
+
+<div id="milk_time"></div>
+
+<h2>喂奶分布：</h2>
+
+<div id="milk_pie"></div>
+
+<h2>睡觉：</h2>
+
+<div id="sleep_time"></div>
+
+<h2>WC：</h2>
+
+<div id="wc"></div>
+
+<script type="text/javascript" src="flotr2.min.js"></script>
+<script type="text/javascript">
+			function showChart(milk, milk_time, sleep_time, wc, pie) {
+				//console.log(milk);
+				//console.log(milk_time);
+				//console.log(sleep_time);
+				//牛奶
+				drawMilk(milk);
+				//牛奶时间
+				drawMilkTime(milk_time);
+				drawSleepTime(sleep_time);
+				drawWC(wc);
+				drawPie(pie);
+			}
+
+			function drawChart(data) {
+				//牛奶
+				drawMilk(data[0]);
+				//牛奶时间
+				drawMilkTime(data[1]);
+				drawSleepTime(data[2]);
+				drawWC(data[3]);
+				drawPie(data[4]);
+			}
+
+			function drawMilk(data) { //画喂奶的stack bar
+				var milk_div = document.getElementById("milk");
+				var huMilk = data[0]; //人奶
+				var milk = data[1]; //牛奶
+				Flotr.draw(milk_div, [{
+					data: huMilk,
+					label: "人奶"
+				}, {
+					data: milk,
+					label: "牛奶"
+				}], {
+					legend: {
+						backgroundColor: '#D2E8FF' // Light blue 
+					},
+					bars: {
+						show: true,
+						stacked: true,
+						horizontal: false,
+						barWidth: 0.6,
+						lineWidth: 1,
+						shadowSize: 0
+					},
+					mouse: {
+						track: true,
+						relative: true
+					},
+					yaxis: {
+						min: 0,
+						title: "ml"
+					},
+					grid: {
+						verticalLines: false,
+						horizontalLines: true
+					}
+				});
+			}
+
+			function drawMilkTime(data) {
+				drawBar(data, document.getElementById("milk_time"), "小时");
+			}
+
+			function drawSleepTime(data) {
+				drawBar(data, document.getElementById("sleep_time"), "小时");
+			}
+
+			function drawWC(data) {
+				drawBar(data, document.getElementById("wc"), "次");
+			}
+
+			function drawPie(data) { //牛奶分布的饼图
+				var pie_div = document.getElementById("milk_pie");
+				Flotr.draw(pie_div, [{
+					data: data[0],
+					label: "人奶"
+				}, {
+					data: data[1],
+					label: "牛奶",
+					pie: {
+						explode: 30
+					}
+				}], {
+					HtmlText: false,
+					grid: {
+						verticalLines: false,
+						horizontalLines: false
+					},
+					xaxis: {
+						showLabels: false
+					},
+					yaxis: {
+						showLabels: false
+					},
+					pie: {
+						show: true,
+						explode: 6
+					},
+					mouse: {
+						track: true
+					},
+					legend: {
+						position: 'se',
+						backgroundColor: '#D2E8FF'
+					}
+				})
+			}
+
+			function drawBar(data, obj, ytitle) {
+				var bar = {
+						data: data[0],
+						bars: {
+							show: true,
+							barWidth: 0.8,
+							lineWidth: 0,
+							//							fillColor: {
+							//								colors: ['#0000ff', '#fff'],
+							//								start: 'top',
+							//								end: 'bottom'
+							//							},
+							fillOpacity: 0.8
+						}
+					},
+					markers = {
+						data: data[1],
+						markers: {
+							show: true,
+							position: 'ct'
+						}
+					}
+				Flotr.draw(obj, [
+					bar, markers
+				], {
+					legend: {
+						backgroundColor: '#D2E8FF' // Light blue 
+					},
+					yaxis: {
+						title: ytitle
+					},
+					grid: {
+						verticalLines: true,
+						backgroundColor: ['#fff', '#ccc']
+					}
+				});
+			}
+
+
+</script>
+</body>
+
+<script type="text/javascript">
+		 //TODO just 4 test
+		var test = false;
+		if (test) {
+			var data = [];
+			//喂奶
+			var huMilk = [];
+			var milk = [];
+			for (i = 0; i <= 31; i += 1) {
+				huMilk.push([i, 4 + Math.pow(i, 1.5)]);
+				milk.push([i, i * 5 + 3 * Math.sin(i * 4)]);
+			}
+			var data1 = [huMilk, milk];
+			data.push(data1);
+			//喂奶时间
+			var milk_time = [];
+			var milk_time_ms = [];
+			var sleep_time = [];
+			var sleep_time_ms = [];
+			var wc = [];
+			var wc_ms = [];
+			for (i = 0; i <= 31; i++) {
+				milk_time.push([i, Math.ceil(Math.random() * 40)]);
+				milk_time_ms.push(milk_time[i]);
+				sleep_time.push([i, Math.ceil(Math.random() * 120)]);
+				sleep_time_ms.push(sleep_time[i]);
+				wc.push([i, Math.ceil(Math.random() * 5)]);
+				wc_ms.push(wc[i]);
+			}
+			data.push([milk_time, milk_time_ms]);
+			data.push([sleep_time, sleep_time_ms]);
+			data.push([wc, wc_ms]);
+			data.push([ //pie是个二维数组
+				[
+					[0, 50]
+				],
+				[
+					[0, 100]
+				]
+			]);
+			drawChart(data);
+		}
+
+
+</script>
+
+</html>
