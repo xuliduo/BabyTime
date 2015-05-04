@@ -66,7 +66,7 @@
     <RadioGroup
         android:id="@+id/d_rg"
         android:layout_width="fill_parent"
-        android:layout_height="120dp"
+        android:layout_height="200dp"
         android:layout_below="@+id/d_bt_start"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
@@ -101,18 +101,24 @@
             android:layout_height="wrap_content"
             android:text="玩"
             android:id="@+id/d_rb_play" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="吸奶器"
+            android:id="@+id/d_rb_xinai" />
     </RadioGroup>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_below="@+id/d_rg"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_above="@+id/d_bt_commit"
         android:layout_alignRight="@+id/d_bt_end_time"
-        android:layout_alignEnd="@+id/d_bt_end_time">
+        android:layout_alignEnd="@+id/d_bt_end_time"
+        android:layout_below="@+id/d_rg">
 
         <LinearLayout
             android:layout_width="wrap_content"

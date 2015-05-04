@@ -149,6 +149,8 @@ public class MainActivity extends ActionBarActivity {
                 case 5://wc
                     lastTypeText.setText("WC");
                     break;
+                case 6://挤奶
+                    lastTypeText.setText("挤奶->奶量[" + record.getXinaiMilk() + "]");
             }
         } else {
             Toast.makeText(MainActivity.this, "请添加记录...", Toast.LENGTH_SHORT);
@@ -203,6 +205,7 @@ public class MainActivity extends ActionBarActivity {
                         + "ml],人奶:[" + record.getHuMilkByDay() + "ml],牛奶[" + record.getMilkByDay() + "ml]");
                 map.put("listView_sleep", "睡觉->" + record.getSleepByDay() / 1000 / 60 / 60 + "小时");
                 map.put("listView_wc", "大小便->" + record.getWcByDay() + "次");
+                map.put("listView_xinai", "挤奶->[" + record.getXinaiMilkByDay() + "ml]");
                 mylist.add(map);
             }
             return true;
@@ -224,10 +227,10 @@ public class MainActivity extends ActionBarActivity {
                     R.layout.listview_top10,//ListItem的XML实现
 
                     //动态数组与ListItem对应的子项
-                    new String[]{"listView_time", "listView_bfeeding", "listView_sleep", "listView_wc"},
+                    new String[]{"listView_time", "listView_bfeeding", "listView_sleep", "listView_wc", "listView_xinai"},
 
                     //ListItem的XML文件里面的两个TextView ID
-                    new int[]{R.id.listView_time, R.id.listView_bfeeding, R.id.listView_sleep, R.id.listView_wc});
+                    new int[]{R.id.listView_time, R.id.listView_bfeeding, R.id.listView_sleep, R.id.listView_wc, R.id.listView_xinai});
             //添加并且显示
             listView.setAdapter(mSchedule);
             super.onPostExecute(boo);

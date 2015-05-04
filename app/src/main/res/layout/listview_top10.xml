@@ -41,5 +41,13 @@
             android:text="大小便->2次"
             android:layout_weight="1"
             android:layout_below="@+id/listView_sleep" />
+
+        <TextView
+            android:id="@+id/listView_xinai"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="挤奶->[100ml]"
+            android:layout_weight="1"
+            android:layout_below="@+id/listView_wc" />
     </RelativeLayout>
 </LinearLayout>

@@ -48,6 +48,7 @@ public class DetailsActivity extends ActionBarActivity {
     private RadioButton bathe = null;//洗澡radio
     private RadioButton play = null;//玩radio
     private RadioButton wc = null;//wc radio
+    private RadioButton xinai = null;//吸奶器
 
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINA);
 
@@ -76,6 +77,7 @@ public class DetailsActivity extends ActionBarActivity {
         this.sleep = (RadioButton) this.findViewById(R.id.d_rb_sleep);
         this.bathe = (RadioButton) this.findViewById(R.id.d_rb_bathe);
         this.play = (RadioButton) this.findViewById(R.id.d_rb_play);
+        this.xinai = (RadioButton) this.findViewById(R.id.d_rb_xinai);
 
         dao = new RecordDAO(this);
 
@@ -207,6 +209,15 @@ public class DetailsActivity extends ActionBarActivity {
             case 5://wc
                 record.setIsWc(1);
                 break;
+            case 6://挤奶
+                if (!"".equals(huMilk.getText().toString()))//人奶
+                {
+                    record.setXinaiMilk(Integer.parseInt(huMilk.getText().toString()));
+                }
+                if (duration > 0) {
+                    record.setXinaiTime(duration);
+                }
+
         }
         if (id == -1) {
             dao.insert(record);
@@ -255,6 +266,12 @@ public class DetailsActivity extends ActionBarActivity {
 
                     break;
                 case 5://wc
+                    break;
+                case 6://吸奶器
+                    if (huMilkText == null || "".equals(huMilkText.trim())) {
+                        Toast.makeText(DetailsActivity.this, "请在人奶中设置吸奶量...", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     break;
             }
             if (doData()) {
@@ -359,6 +376,9 @@ public class DetailsActivity extends ActionBarActivity {
                 case R.id.d_rb_wc:
                     type = 5;
                     break;
+                case R.id.d_rb_xinai:
+                    type = 6;
+                    break;
                 default:
                     type = -1;
                     break;
@@ -406,6 +426,10 @@ public class DetailsActivity extends ActionBarActivity {
                         break;
                     case 5://wc
                         wc.setChecked(true);
+                        break;
+                    case 6://吸奶器
+                        xinai.setChecked(true);
+                        huMilk.setText(record.getXinaiMilk() > 0 ? record.getXinaiMilk() + "" : "");
                         break;
                 }
             }

@@ -13,7 +13,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String TAG = DBHelper.class.getName();
 
     private static final String DB_NAME = "baby";
-    private static final int DB_VERSION = 1;
+    private static final int DB_VERSION = 2;
     private static final String DB_DIR = Environment.getExternalStorageDirectory().getPath() + "/baby_db";
 
     private static SQLiteDatabase DB;
@@ -46,7 +46,10 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        if (oldVersion == 1 && newVersion == 2) {
+            db.execSQL("ALTER TABLE " + RecordDAO.TABLE_NAME + " ADD COLUMN xinai_milk INTEGER");
+            db.execSQL("ALTER TABLE " + RecordDAO.TABLE_NAME + " ADD COLUMN xinai_time INTEGER");
+        }
     }
 
     /**

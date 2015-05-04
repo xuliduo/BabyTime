@@ -16,12 +16,12 @@ public class RecordDAO {
 
     //public static enum BabyType {喂奶, 睡觉, 洗澡, WC, 玩}
 
-    private static final String TABLE_NAME = "record";
+    public static final String TABLE_NAME = "record";
 
     private static final String KEY_ID = "_id";
 
-    private static final String[] COLUMN = new String[]{"day", "start_time", "end_time", "type", "hu_milk", "milk",
-            "milk_time", "sleep_time", "is_wc", "play_time"};
+    public static final String[] COLUMN = new String[]{"day", "start_time", "end_time", "type", "hu_milk", "milk",
+            "milk_time", "sleep_time", "is_wc", "play_time", "xinai_milk", "xinai_time"};
 
     public static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ( " +
             KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -34,7 +34,9 @@ public class RecordDAO {
             COLUMN[6] + " INTEGER," +
             COLUMN[7] + " INTEGER," +
             COLUMN[8] + " INTEGER," +
-            COLUMN[9] + " INTEGER )";
+            COLUMN[9] + " INTEGER," +
+            COLUMN[10] + " INTEGER," +
+            COLUMN[11] + " INTEGER )";
 
     private SQLiteDatabase db;
 
@@ -57,13 +59,9 @@ public class RecordDAO {
     }
 
     /**
-     * 插入
-     *
      * @param record
-     * @return
      */
-    public Record insert(Record record) {
-
+    private ContentValues getCV(Record record) {
         ContentValues cv = new ContentValues();
 
         cv.put(COLUMN[0], record.getDay());
@@ -76,6 +74,20 @@ public class RecordDAO {
         cv.put(COLUMN[7], record.getSleepTime());
         cv.put(COLUMN[8], record.getIsWc());
         cv.put(COLUMN[9], record.getPlayTime());
+        cv.put(COLUMN[10], record.getXinaiMilk());
+        cv.put(COLUMN[11], record.getXinaiTime());
+        return cv;
+    }
+
+    /**
+     * 插入
+     *
+     * @param record
+     * @return
+     */
+    public Record insert(Record record) {
+
+        ContentValues cv = getCV(record);
 
         long id = db.insert(TABLE_NAME, null, cv);
         record.setId(id);
@@ -90,18 +102,7 @@ public class RecordDAO {
      * @return
      */
     public boolean update(Record record) {
-        ContentValues cv = new ContentValues();
-
-        cv.put(COLUMN[0], record.getDay());
-        cv.put(COLUMN[1], record.getStartTime());
-        cv.put(COLUMN[2], record.getEndTime());
-        cv.put(COLUMN[3], record.getType());
-        cv.put(COLUMN[4], record.getHuMilk());
-        cv.put(COLUMN[5], record.getMilk());
-        cv.put(COLUMN[6], record.getMilkTime());
-        cv.put(COLUMN[7], record.getSleepTime());
-        cv.put(COLUMN[8], record.getIsWc());
-        cv.put(COLUMN[9], record.getPlayTime());
+        ContentValues cv = getCV(record);
 
         String where = KEY_ID + "=" + record.getId();
 
@@ -128,6 +129,8 @@ public class RecordDAO {
         record.setSleepTime(cursor.getLong(8));
         record.setIsWc(cursor.getInt(9));
         record.setPlayTime(cursor.getLong(10));
+        record.setXinaiMilk(cursor.getInt(11));
+        record.setXinaiTime(cursor.getLong(12));
 
         return record;
     }
@@ -193,7 +196,7 @@ public class RecordDAO {
     private List<Record> getListGroupByDay(String where, int limit, String desc) {
         List<Record> list = new ArrayList<>();
         String sql = "SELECT SUM(hu_milk),SUM(milk),SUM(hu_milk+milk),SUM(milk_time)," +
-                "SUM(sleep_time),SUM(is_wc),SUM(play_time),day FROM " +
+                "SUM(sleep_time),SUM(is_wc),SUM(play_time),SUM(xinai_milk),SUM(xinai_time),day FROM " +
                 TABLE_NAME + " WHERE " +
                 where + " GROUP BY day ORDER BY day "
                 + desc + " LIMIT " + limit;
@@ -207,7 +210,10 @@ public class RecordDAO {
             record.setSleepByDay(result.getLong(4));
             record.setWcByDay(result.getLong(5));
             record.setPlayByDay(result.getLong(6));
-            record.setDay(result.getString(7));
+            record.setXinaiMilkByDay(result.getLong(7));
+            record.setXinaiTimeByDay(result.getLong(8));
+            record.setDay(result.getString(9));
+
             list.add(record);
         }
         result.close();

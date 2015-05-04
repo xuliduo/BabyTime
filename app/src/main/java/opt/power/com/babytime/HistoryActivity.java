@@ -148,6 +148,9 @@ public class HistoryActivity extends ActionBarActivity {
                     case 5://wc
                         map.put(m[3], "WC");
                         break;
+                    case 6://挤奶
+                        map.put(m[3], "挤奶->奶量[" + record.getXinaiMilk() + "]");
+                        break;
                 }
                 mylist.add(map);
             }

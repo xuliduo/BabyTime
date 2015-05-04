@@ -15,6 +15,8 @@ public class Record {
     private long sleepTime;
     private int isWc;
     private long playTime;
+    private int xinaiMilk;
+    private long xinaiTime;//挤奶时间
 
 
     private long allMilkByDay;//当天所有的喂奶 ml
@@ -24,6 +26,8 @@ public class Record {
     private long wcByDay;//当天大便次数
     private long playByDay;//当天玩的时间 秒
     private long milkTimeByDay;//当天喂奶的时间 秒
+    private long xinaiMilkByDay;//当天所有奶量 秒
+    private long xinaiTimeByDay;//当天所有的挤奶时间 秒
 
     public long getMilkTimeByDay() {
         return milkTimeByDay;
@@ -167,5 +171,37 @@ public class Record {
 
     public void setPlayByDay(long playByDay) {
         this.playByDay = playByDay;
+    }
+
+    public long getXinaiTime() {
+        return xinaiTime;
+    }
+
+    public void setXinaiTime(long xinaiTime) {
+        this.xinaiTime = xinaiTime;
+    }
+
+    public long getXinaiTimeByDay() {
+        return xinaiTimeByDay;
+    }
+
+    public void setXinaiTimeByDay(long xinaiTimeByDay) {
+        this.xinaiTimeByDay = xinaiTimeByDay;
+    }
+
+    public int getXinaiMilk() {
+        return xinaiMilk;
+    }
+
+    public void setXinaiMilk(int xinaiMilk) {
+        this.xinaiMilk = xinaiMilk;
+    }
+
+    public long getXinaiMilkByDay() {
+        return xinaiMilkByDay;
+    }
+
+    public void setXinaiMilkByDay(long xinaiMilkByDay) {
+        this.xinaiMilkByDay = xinaiMilkByDay;
     }
 }
